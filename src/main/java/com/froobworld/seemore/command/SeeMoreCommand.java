@@ -37,10 +37,6 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length > 0) {
-            if (args[0].equalsIgnoreCase("test"))
-            {
-                seeMore.getLogger().warning(String.valueOf(seeMore.getSeeMoreConfig().permissionSettings.getMaximumViewDistance((Player) sender)));
-            }
             if (args[0].equalsIgnoreCase("average")) {
                 if (sender.hasPermission("seemore.command.average")) {
                     return averageCommand.onCommand(sender, command, label, args);
