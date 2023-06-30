@@ -13,6 +13,9 @@ repositories {
     maven {
         url "https://repo.papermc.io/repository/maven-public/"
     }
+    maven {
+        url "https://mymavenrepo.com/repo/SjKIru68icwwmC0qOtV7/"
+    }
     flatDir {
         dirs 'file://F:/Coding/Java/Minecraft/Projects/Edenor/nab-configuration/build/libs'
     }
@@ -23,6 +26,8 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
     compileOnly 'dev.folia:folia-api:1.19.4-R0.1-SNAPSHOT'
     implementation 'com.froobworld:nab-configuration:1.0.2'
+    implementation 'me.wyne:WUtils-config:1.2.2'
+    implementation 'me.wyne:WUtils-log:1.1.0'
     implementation 'org.bstats:bstats-bukkit:3.0.1'
 }
 
@@ -34,6 +39,7 @@ shadowJar {
     archiveFileName = 'SeeMore-' + project.version.toString() + '.jar';
 
     relocate 'com.froobworld.nabconfiguration', 'com.froobworld.seemore.lib.nabconfiguration'
+    relocate 'me.wyne.wutils', 'com.froobworld.seemore.lib.wutils'
     relocate 'org.bstats','com.froobworld.seemore.lib.bstats'
 }
 

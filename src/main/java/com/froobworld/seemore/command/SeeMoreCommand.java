@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -36,6 +37,10 @@ public class SeeMoreCommand implements CommandExecutor, TabCompleter {
         }
 
         if (args.length > 0) {
+            if (args[0].equalsIgnoreCase("test"))
+            {
+                seeMore.getLogger().warning(String.valueOf(seeMore.getSeeMoreConfig().permissionSettings.getMaximumViewDistance((Player) sender)));
+            }
             if (args[0].equalsIgnoreCase("average")) {
                 if (sender.hasPermission("seemore.command.average")) {
                     return averageCommand.onCommand(sender, command, label, args);

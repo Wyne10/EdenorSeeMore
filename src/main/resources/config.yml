@@ -18,7 +18,8 @@ world-settings:
 
 permission-settings:
   default:
-
-
-  sponsor:
+    permission: 'edenor.player.seemore'
     maximum-view-distance: -1
+  sponsor:
+    permission: 'edenor.sponsor.seemore'
+    maximum-view-distance: 16

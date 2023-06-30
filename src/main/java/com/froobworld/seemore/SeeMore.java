@@ -7,6 +7,7 @@ import com.froobworld.seemore.metrics.SeeMoreMetrics;
 import com.froobworld.seemore.scheduler.BukkitSchedulerHook;
 import com.froobworld.seemore.scheduler.RegionisedSchedulerHook;
 import com.froobworld.seemore.scheduler.SchedulerHook;
+import me.wyne.wutils.config.Config;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,8 +20,10 @@ public class SeeMore extends JavaPlugin {
     @Override
     public void onEnable() {
         config = new SeeMoreConfig(this);
+        Config.registerConfigObject(config);
         try {
             config.load();
+            Config.reloadConfigObjects(getConfig());
         } catch (Exception e) {
             getLogger().severe("Error loading config");
             e.printStackTrace();
@@ -59,6 +62,8 @@ public class SeeMore extends JavaPlugin {
 
     public void reload() throws Exception {
         config.load();
+        reloadConfig();
+        Config.reloadConfigObjects(getConfig());
         if (viewDistanceController != null) {
 
             // Update the target view distance of all players in case the configured maximum has changed
