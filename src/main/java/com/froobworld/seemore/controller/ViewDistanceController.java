@@ -39,6 +39,7 @@ public class ViewDistanceController {
         // Получить минимальную и максимальную дальность прорисовки
         int floor = player.getWorld().getSimulationDistance();
         int ceiling = Math.min(seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).maximumViewDistance.get(), 32);
+        ceiling = Math.min(ceiling, seeMore.getSeeMoreConfig().permissionSettings.getMaximumViewDistance(player));
 
         // Default to the world's view distance if the configured ceiling is negative
         ceiling = ceiling < 0 ? player.getWorld().getViewDistance() : ceiling;
