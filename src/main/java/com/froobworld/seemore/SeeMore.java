@@ -27,6 +27,8 @@ public class SeeMore extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+
+        // Проверка на поддержку фолии
         if (RegionisedSchedulerHook.isCompatible()) {
             schedulerHook = new RegionisedSchedulerHook(this);
         } else {

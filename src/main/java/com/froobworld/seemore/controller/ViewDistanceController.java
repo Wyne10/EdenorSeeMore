@@ -14,17 +14,19 @@ import java.util.function.BiConsumer;
 public class ViewDistanceController {
     private static final int MAX_UPDATE_ATTEMPTS = 10;
     private final SeeMore seeMore;
-    private final Map<UUID, Integer> targetViewDistanceMap = new ConcurrentHashMap<>();
-    private final Map<UUID, Integer> targetSendDistanceMap = new ConcurrentHashMap<>();
+    private final Map<UUID, Integer> targetViewDistanceMap = new ConcurrentHashMap<>(); // Визуальная дальность прорисовки (Чанки прогрузятся, но не будут тикаться)
+    private final Map<UUID, Integer> targetSendDistanceMap = new ConcurrentHashMap<>(); // Даьность прорисовки тиков
     private final Map<UUID, ScheduledTask> viewDistanceUpdateTasks = new ConcurrentHashMap<>();
     private final Map<UUID, ScheduledTask> sendDistanceUpdateTasks = new ConcurrentHashMap<>();
 
     public ViewDistanceController(SeeMore seeMore) {
         this.seeMore = seeMore;
+        // Очистка мап от вышедших игроков
         seeMore.getSchedulerHook().runRepeatingTask(this::cleanMaps, 1200, 1200);
         Bukkit.getPluginManager().registerEvents(new ViewDistanceUpdater(this), seeMore);
     }
 
+    // Обновить альность прорисовки всех игроков
     public void updateAllPlayers() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             seeMore.getSchedulerHook().runEntityTaskAsap(() -> {
@@ -34,6 +36,7 @@ public class ViewDistanceController {
     }
 
     public void setTargetViewDistance(Player player, int clientViewDistance, boolean testDelay) {
+        // Получить минимальную и максимальную дальность прорисовки
         int floor = player.getWorld().getSimulationDistance();
         int ceiling = Math.min(seeMore.getSeeMoreConfig().worldSettings.of(player.getWorld()).maximumViewDistance.get(), 32);
 

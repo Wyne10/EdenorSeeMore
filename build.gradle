@@ -13,6 +13,9 @@ repositories {
     maven {
         url "https://repo.papermc.io/repository/maven-public/"
     }
+    flatDir {
+        dirs 'file://F:/Coding/Java/Minecraft/Projects/Edenor/nab-configuration/build/libs'
+    }
 }
 
 dependencies {

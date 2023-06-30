@@ -15,3 +15,10 @@ world-settings:
     # The maximum view distance a player in this world can have.
     # Set to -1 to use the server's configured view distance for this world.
     maximum-view-distance: -1
+
+permission-settings:
+  default:
+
+
+  sponsor:
+    maximum-view-distance: -1
