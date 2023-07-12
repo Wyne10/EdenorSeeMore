@@ -26,7 +26,7 @@ public class ViewDistanceController {
         Bukkit.getPluginManager().registerEvents(new ViewDistanceUpdater(this), seeMore);
     }
 
-    // Обновить альность прорисовки всех игроков
+    // Обновить дальность прорисовки всех игроков
     public void updateAllPlayers() {
         for (Player player : Bukkit.getOnlinePlayers()) {
             seeMore.getSchedulerHook().runEntityTaskAsap(() -> {
