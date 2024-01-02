@@ -15,9 +15,7 @@ public class ViewDistanceController {
     private static final int MAX_UPDATE_ATTEMPTS = 10;
     private final SeeMore seeMore;
     private final Map<UUID, Integer> targetViewDistanceMap = new ConcurrentHashMap<>(); // Визуальная дальность прорисовки (Чанки прогрузятся, но не будут тикаться)
-    private final Map<UUID, Integer> targetSendDistanceMap = new ConcurrentHashMap<>(); // Даьность прорисовки тиков
     private final Map<UUID, ScheduledTask> viewDistanceUpdateTasks = new ConcurrentHashMap<>();
-    private final Map<UUID, ScheduledTask> sendDistanceUpdateTasks = new ConcurrentHashMap<>();
 
     public ViewDistanceController(SeeMore seeMore) {
         this.seeMore = seeMore;
@@ -45,7 +43,6 @@ public class ViewDistanceController {
         ceiling = ceiling < 0 ? player.getWorld().getViewDistance() : ceiling;
 
         targetViewDistanceMap.put(player.getUniqueId(), Math.max(floor, Math.min(ceiling, clientViewDistance)));
-        targetSendDistanceMap.put(player.getUniqueId(), Math.max(2, Math.min(ceiling, clientViewDistance)) + 1);
 
         // Update the view distance with a delay if it is being lowered
         long delay = 0;
@@ -55,12 +52,7 @@ public class ViewDistanceController {
             }
         } catch (Exception ignored) {}
 
-        updateSendDistance(player);
         updateViewDistance(player, delay);
-    }
-
-    private void updateSendDistance(Player player) {
-        updateDistance(player, 0, 0, targetSendDistanceMap, sendDistanceUpdateTasks, Player::setSendViewDistance);
     }
 
     private void updateViewDistance(Player player, long delay) {
@@ -97,9 +89,7 @@ public class ViewDistanceController {
     }
 
     private void cleanMaps() {
-        sendDistanceUpdateTasks.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
         viewDistanceUpdateTasks.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
-        targetSendDistanceMap.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
         targetViewDistanceMap.entrySet().removeIf(entry -> Bukkit.getPlayer(entry.getKey()) == null);
     }
 
